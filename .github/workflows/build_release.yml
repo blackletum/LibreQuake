@@ -90,7 +90,11 @@ jobs:
     - name: Install dependencies
       run: bash -x .github/scripts/install_deps_levelshots.sh
     - name: Build levelshots
-      run: python build.py --compile_ls
+      run: |
+          export DISPLAY=:99
+          Xvfb -ac :99 -screen 0 2560x1600x24 > /dev/null 2>&1 &
+          python build.py --compile_ls
+
     - name: Upload levelshots-artifact
       uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
